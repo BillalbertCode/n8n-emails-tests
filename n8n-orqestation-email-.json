@@ -1,0 +1,1415 @@
+{
+  "updatedAt": "2026-04-16T22:16:17.765Z",
+  "createdAt": "2026-04-07T17:30:58.179Z",
+  "id": "7YGtfXS1hpErZhKn",
+  "name": "n8n-orqestation-email",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -112,
+        720
+      ],
+      "id": "c219b6d4-911a-46fc-a592-5d329943242b",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "simple": false,
+        "filters": {
+          "labelIds": [
+            "Label_660351348862593503"
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        320,
+        720
+      ],
+      "id": "c219edc6-6d11-43c8-8070-549fa508811c",
+      "name": "Get many messages",
+      "webhookId": "ff75011e-2f24-4108-93d3-db7a0262e894",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "pVTSZP5SJJKcWgaf",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.from.value[0].name }}",
+                    "rightValue": "Tu lista de empleos de Computrabajo",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "412c0923-5c26-462b-bd69-9d89b0f11a00"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "dee09d40-53ff-4a25-999a-07442b8c704f",
+                    "leftValue": "={{ $json.from.value[0].name }}",
+                    "rightValue": "Alertas de empleo de LinkedIn",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "30132a6d-5bb6-4c77-82a5-f59278bfc8c7",
+                    "leftValue": "={{ $json.from.value[0].name }}",
+                    "rightValue": "Trabajos Diarios",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "1ced273b-f365-4698-8683-191183896c9b",
+                    "leftValue": "={{ $json.from.value[0].name }}",
+                    "rightValue": "Equipo de Computrabajo",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "a9515e50-4cad-4d62-9444-e89ac036cb3a",
+                    "leftValue": "={{ $json.from.value[0].name }}",
+                    "rightValue": "Alerta de empleo ticjob.co",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "c8e8e86b-c1bb-4837-87ea-da3baef41a1b",
+                    "leftValue": "={{ $json.from.value[0].name }}",
+                    "rightValue": "LinkedIn",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "ff6967c1-fb40-4085-9746-3edef15b249d",
+                    "leftValue": "={{ $json.from.value[0].name }}",
+                    "rightValue": "Get on Board",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "e8b75eab-de7d-436d-ae6f-ad631abbef16",
+                    "leftValue": "={{ $json.from.value[0].name }}",
+                    "rightValue": "Bumeran",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "e007eddb-970c-4ecb-ae6a-73393def4770",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        544,
+        608
+      ],
+      "id": "34008553-53df-4d42-9065-675d59ba2494",
+      "name": "Switch",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "dataPropertyName": "html",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "title",
+              "cssSelector": ".title_oferta strong",
+              "returnArray": true
+            },
+            {
+              "key": "link",
+              "cssSelector": "a[href*=\"o_detail\"]",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {
+          "trimValues": false,
+          "cleanUpText": false
+        }
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        768,
+        -48
+      ],
+      "id": "8535f4a0-748f-48eb-b220-37e8f9e468af",
+      "name": "Cumputrabajo Lista Parsing HTML",
+      "alwaysOutputData": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "dataPropertyName": "html",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "title",
+              "cssSelector": "a[class*=\"font-bold\"]",
+              "returnArray": true
+            },
+            {
+              "key": "link",
+              "cssSelector": "a[class*=\"font-bold\"]",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        768,
+        144
+      ],
+      "id": "0ea969a4-4a21-45bf-8c15-89f8a2f7f2e9",
+      "name": "Linkedin Lista Parsing HTML",
+      "alwaysOutputData": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "delete"
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        3024,
+        432
+      ],
+      "id": "f9ec95d1-8712-4fe6-82cc-2d686e531130",
+      "name": "Delete a message",
+      "webhookId": "e2fa398e-ef4a-4d62-be6c-9d079e873b94",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "pVTSZP5SJJKcWgaf",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 7
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1216,
+        640
+      ],
+      "id": "cd31b6d0-75fe-4ccd-85fe-76dc6c69f8f1",
+      "name": "Merge",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d9fda6ee-e233-43b0-98df-0edd4930fd4a",
+              "name": "id_email",
+              "value": "={{ $('Get many messages').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "cf8ebbc5-7618-4a7a-8632-464a6dfc0e36",
+              "name": "headers.from",
+              "value": "={{ $('Get many messages').item.json.headers.from }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1440,
+        720
+      ],
+      "id": "2b42c930-427d-4041-ab8c-fca77f03752f",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = [];\nconst items = $input.all()\n\nfor (const item of items) {\n  const titles = item.json.title;\n  const links = item.json.urls;\n  const id_email = item.json.id_email;\n  const from = item.json.headers\n\n  for (let i = 0; i < titles.length; i++) {\n    output.push({\n      json: {\n        title: titles[i],\n        link: links[i],\n        id_email: id_email,\n        from\n      }\n    });\n  }\n}\n\nreturn output;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1664,
+        720
+      ],
+      "id": "b7d45f09-5204-4d4d-84dc-ac259c362be8",
+      "name": "Normalizacion"
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = [];\nconst regex = /(https:\\/\\/www\\.linkedin\\.com\\/comm\\/jobs\\/view\\/\\d+)/;\nconst items = $input.all()\n\nfor (const item of items) {\n  const textos = item.json.link; // es un array de strings\n\n  const linkedin_urls = textos\n    .map(texto => {\n      const match = texto.match(regex);\n      return match ? match[1] : null;\n    })\n    .filter(url => url !== null); // elimina los nulls (textos sin URL)\n\n  output.push({\n    json: {\n      ...item.json,\n      urls: linkedin_urls\n    }\n  });\n}\n\nreturn output;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        992,
+        144
+      ],
+      "id": "57cf17a0-d29e-40da-a962-cb62ed95d146",
+      "name": "Linkedin Links regex"
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = [];\nconst regex = /url=(https%3A%2F%2F[^&]+?)(?:%3F|&|$)/;\nconst items = $input.all()\n\nfor (const item of items) {\n  const textos = item.json.link; // es un array de strings\n\n  const computrabajo_urls = textos\n    .map(texto => {\n      const match = texto.match(regex);\n      if (match) {\n        let urlDecodificada = decodeURIComponent(match[1]);\n        // Si la URL tiene parámetros internos, quedarse solo con la parte antes del ?\n        urlDecodificada = urlDecodificada.split('?')[0];\n        return urlDecodificada;\n      }\n      return null;\n    })\n    .filter(url => url !== null);\n\n  output.push({\n    json: {\n      ...item.json,\n      urls: computrabajo_urls\n    }\n  });\n}\n\nreturn output;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        992,
+        -48
+      ],
+      "id": "efb45233-0ac7-4ad1-afb2-80a53057fa08",
+      "name": "Computrabajo Links Regex"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "link",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        1888,
+        720
+      ],
+      "id": "41e87c66-8c93-46c6-afc3-0f31dcd776ea",
+      "name": "Deduplication registry",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "BillalbertCode@gmail.com",
+        "subject": "Tus Postulaciones  n8n",
+        "message": "=Hola, ya hemos filtrado los email por ti revisalos para continuar {{ $input.all().map(item => item.json.title) }}\n// Para obtener objetos con título y link\n{{ $input.all().map((item, i) => (i+1) + '. ' + item.json.title + '\\n   ' + item.json.link).join('\\n\\n') }}\n",
+        "approvalOptions": {
+          "values": {}
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2784,
+        624
+      ],
+      "id": "f854e437-855d-4213-82f8-a6f2617dba7d",
+      "name": "Send a message",
+      "webhookId": "db00ccf4-0fe7-4f4d-a1ff-49c670b558cf",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "pVTSZP5SJJKcWgaf",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Parsing y normalizacion de los datos\n\n",
+        "height": 576,
+        "width": 1120,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        704,
+        384
+      ],
+      "typeVersion": 1,
+      "id": "a2f6671b-feeb-4916-bdda-48c280e65ae5",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "# Deduplicate",
+        "height": 368,
+        "width": 640,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        512
+      ],
+      "id": "d2f2da15-6829-4086-a5d9-3ee72d61c608",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "operation": "rowNotExists",
+        "dataTableId": {
+          "__rl": true,
+          "value": "sv3nxgdgPkkd2zpZ",
+          "mode": "list",
+          "cachedResultName": "postulations-links",
+          "cachedResultUrl": "/projects/h1BZQDCni1dEZyvw/datatables/sv3nxgdgPkkd2zpZ"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "link",
+              "keyValue": "={{ $json.link }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        2336,
+        624
+      ],
+      "id": "d481a7db-5752-49cb-ac44-67fe946abd9a",
+      "name": "Deduplicate DB (Seen URLs index)",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "sv3nxgdgPkkd2zpZ",
+          "mode": "list",
+          "cachedResultName": "postulations-links",
+          "cachedResultUrl": "/projects/h1BZQDCni1dEZyvw/datatables/sv3nxgdgPkkd2zpZ"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "link": "={{ $json.link }}",
+            "title": "={{ $json.title }}",
+            "id_email": "={{ $json.id_email }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "link",
+              "displayName": "link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "id_email",
+              "displayName": "id_email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        2560,
+        624
+      ],
+      "id": "89c8197b-8121-42cb-b5e8-36c828995e8f",
+      "name": "Keep (Seen URLs index)"
+    },
+    {
+      "parameters": {
+        "jsCode": "const emails = $('Keep (Seen URLs index)').all()\n\nfor (let i = 0; i < emails.length; i++) {\n  const emailId = emails[i].json.email_id; \n}\n\nreturn emails;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3008,
+        624
+      ],
+      "id": "0a80e7f4-3c38-49fd-ae78-4963e84c4bae",
+      "name": "GET DATA EMAILS"
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_2392625793427440255"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        768,
+        528
+      ],
+      "id": "18ef5097-aa59-4e11-aa9d-ca87a35adce9",
+      "name": "DELETE no Links",
+      "webhookId": "eb7c0bda-b2f1-41c7-ac5c-0001d84cce69",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "pVTSZP5SJJKcWgaf",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_7484915196405704003"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        768,
+        1488
+      ],
+      "id": "14694795-0cf6-43ba-8a55-e9de76b439b1",
+      "name": "Default No parsing",
+      "webhookId": "937cbe55-237e-42e1-99da-a9f430bb2187",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "pVTSZP5SJJKcWgaf",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id_email }}",
+        "labelIds": [
+          "Label_4096026043453589340"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        3232,
+        624
+      ],
+      "id": "7f54e35e-4b12-4a47-be90-1e000ef9d2a8",
+      "name": "DELETE MESSAGES",
+      "webhookId": "97fb3c33-5a86-4fdc-995f-c753e1c35ecb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "pVTSZP5SJJKcWgaf",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id_email }}",
+        "labelIds": [
+          "Label_6941453549716167144"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2336,
+        816
+      ],
+      "id": "a64b1209-c39d-4628-b1e4-17d84115dd6b",
+      "name": "No seleccionados",
+      "webhookId": "4e68e785-704d-425b-996d-d2e3797a6ff8",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "pVTSZP5SJJKcWgaf",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Lista negra [ADD\n- BairesDev\n- INDI Staffing Services\n- Sezzle\n"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2048,
+        -480
+      ],
+      "typeVersion": 1,
+      "id": "17a6d73c-4970-486d-8a31-0df4711558a0",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = [];\nconst regex = /(https:\\/\\/ve\\.trabajosdiarios\\.com\\/trabajo\\/\\d+\\/[^?]+)/;\nconst items = $input.all()\n\nfor (const item of items) {\n  const textos = item.json.link;\n\n  const trabajosdiarios_urls = textos\n    .map(texto => {\n      const match = texto.match(regex);\n      return match ? match[1] : null;\n    })\n    .filter(url => url !== null);\n\n  output.push({\n    json: {\n      ...item.json,\n      urls: trabajosdiarios_urls\n    }\n  });\n}\n\nreturn output;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        992,
+        336
+      ],
+      "id": "5afa1086-67e8-4d53-8092-d29cced3563c",
+      "name": "Trabajos Diarios  Links regex1"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "dataPropertyName": "html",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "title",
+              "cssSelector": "div.card div a",
+              "returnArray": true
+            },
+            {
+              "key": "link",
+              "cssSelector": "div.card div a",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        768,
+        336
+      ],
+      "id": "abbc231a-8ef3-4af6-bc42-96d83294c27e",
+      "name": "Trabajos Diarios",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "dataPropertyName": "html",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "title",
+              "cssSelector": ".job-alert-title a",
+              "returnArray": true
+            },
+            {
+              "key": "link",
+              "cssSelector": ".job-alert-title a",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        768,
+        720
+      ],
+      "id": "6c8feab3-8d22-4e1a-8e07-d412bb11558f",
+      "name": "tcjob",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = [];\nconst items = $input.all();\n\nfor (const item of items) {\n  const textos = item.json.link;\n\n  // Simplemente pasar los textos originales sin ninguna transformación\n  const urls_originales = textos.filter(url => url !== null && url !== undefined);\n\n  output.push({\n    json: {\n      ...item.json,\n      urls: urls_originales\n    }\n  });\n}\n\nreturn output;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        992,
+        720
+      ],
+      "id": "fd1c1b16-a914-4852-8ddd-5dc15822331d",
+      "name": "tcjob  Links regex"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "dataPropertyName": "html",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "title",
+              "cssSelector": "[data-test-id=\"job-card\"] a[class*=\"text-color-brand\"]",
+              "returnArray": true
+            },
+            {
+              "key": "link",
+              "cssSelector": "[data-test-id=\"job-card\"] a[class*=\"text-color-brand\"]",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        768,
+        912
+      ],
+      "id": "de62800e-ef5a-41ee-aa01-d0b208b35058",
+      "name": "Linkedin Lista Parsing HTML1",
+      "alwaysOutputData": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = [];\nconst regex = /(https:\\/\\/www\\.linkedin\\.com\\/comm\\/jobs\\/view\\/\\d+)/;\nconst items = $input.all()\n\nfor (const item of items) {\n  const textos = item.json.link; // es un array de strings\n\n  const linkedin_urls = textos\n    .map(texto => {\n      const match = texto.match(regex);\n      return match ? match[1] : null;\n    })\n    .filter(url => url !== null); // elimina los nulls (textos sin URL)\n\n  output.push({\n    json: {\n      ...item.json,\n      urls: linkedin_urls\n    }\n  });\n}\n\nreturn output;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        992,
+        912
+      ],
+      "id": "312b4f48-db06-456a-b101-c90f1ba085ff",
+      "name": "Linkedin Links regex1"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "dataPropertyName": "html",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "title",
+              "cssSelector": ".content h1 a, .job a strong",
+              "returnArray": true
+            },
+            {
+              "key": "link",
+              "cssSelector": ".content h1 a, .job a",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        768,
+        1104
+      ],
+      "id": "c502d49f-15dc-4fdd-86dc-ccd9ea584e37",
+      "name": "Get On Board Parsing",
+      "alwaysOutputData": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = [];\nconst items = $input.all();\n\nfor (const item of items) {\n  const textos = item.json.link;\n\n  const urls_getonbrd = textos\n    .map(texto => {\n      // Si es link de tracking de AWS\n      if (texto.includes('awstrack.me')) {\n        // Extraer la parte después de \"https:%2F%2Fwww.getonbrd.com\"\n        const start = texto.indexOf('https:%2F%2Fwww.getonbrd.com');\n        if (start !== -1) {\n          let encoded = texto.substring(start);\n          // Cortar antes del '/1/' de tracking\n          const end = encoded.indexOf('/1/');\n          if (end !== -1) {\n            encoded = encoded.substring(0, end);\n          }\n          return decodeURIComponent(encoded);\n        }\n      }\n      return texto;\n    })\n    .filter(url => url !== null);\n\n  output.push({\n    json: {\n      ...item.json,\n      urls: urls_getonbrd\n    }\n  });\n}\n\nreturn output;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        992,
+        1104
+      ],
+      "id": "4593c09c-7046-45de-88ed-d131fe3721db",
+      "name": "Gentonboard Link regex"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "dataPropertyName": "html",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "title",
+              "cssSelector": ".card wrapper h3, div[style*=\"margin-bottom\"] h3",
+              "returnArray": true
+            },
+            {
+              "key": "link",
+              "cssSelector": ".card wrapper a[href*=\"delivery\"], div[style*=\"margin-bottom\"] a[href*=\"delivery\"]",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        768,
+        1296
+      ],
+      "id": "a1223640-7b53-4190-bfcf-3f78423f24f7",
+      "name": "Bumeran Parsing",
+      "alwaysOutputData": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = [];\nconst items = $input.all();\n\nfor (const item of items) {\n  const textos = item.json.link; // es un array de strings\n\n  // Devolver los links exactamente como llegaron, sin ninguna modificación\n  const links_originales = textos.filter(texto => texto && texto.trim() !== \"\");\n\n  output.push({\n    json: {\n      ...item.json,\n      urls: links_originales\n    }\n  });\n}\n\nreturn output;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        992,
+        1296
+      ],
+      "id": "ddf6f96a-0fde-474c-a74e-be6d0f4a024c",
+      "name": "Gentonboard Link regex1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "6d2d0f82-6ed0-4890-82f3-e7fba4013c42",
+              "leftValue": "={{ $json.title }}",
+              "rightValue": "=Developer|Desarrollador|Programador|Engineer|Software|Frontend|Backend|Web|Full|Full-Stack|Junnior|Stack",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2112,
+        720
+      ],
+      "id": "46100c9e-165b-40ac-8489-81f95ad16084",
+      "name": "DICCIONARIO1",
+      "notesInFlow": true,
+      "notes": "Palabras Clave WitheList"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "60cd62b9-832b-4c8e-a198-1780e2aef799",
+              "leftValue": "={{ $json.title }}",
+              "rightValue": "=Developer|Desarrollador|Programador|Engineer|Software|Frontend|Backend|Web|Full|Full-Stack|Junnior|Stack",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {
+          "ignoreCase": false
+        }
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        -112,
+        -272
+      ],
+      "id": "48d57b2b-6cd1-45cf-8e53-501c9942273b",
+      "name": "DICCIONARIO",
+      "notesInFlow": true,
+      "onError": "continueRegularOutput",
+      "notes": "Palabras clave (white-list)"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get many messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Cumputrabajo Lista Parsing HTML",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Linkedin Lista Parsing HTML",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Trabajos Diarios",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "DELETE no Links",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "tcjob",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Linkedin Lista Parsing HTML1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get On Board Parsing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Bumeran Parsing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Default No parsing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cumputrabajo Lista Parsing HTML": {
+      "main": [
+        [
+          {
+            "node": "Computrabajo Links Regex",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Linkedin Lista Parsing HTML": {
+      "main": [
+        [
+          {
+            "node": "Linkedin Links regex",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Normalizacion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalizacion": {
+      "main": [
+        [
+          {
+            "node": "Deduplication registry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Linkedin Links regex": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Computrabajo Links Regex": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deduplication registry": {
+      "main": [
+        [
+          {
+            "node": "DICCIONARIO1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "GET DATA EMAILS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deduplicate DB (Seen URLs index)": {
+      "main": [
+        [
+          {
+            "node": "Keep (Seen URLs index)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Keep (Seen URLs index)": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET DATA EMAILS": {
+      "main": [
+        [
+          {
+            "node": "DELETE MESSAGES",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trabajos Diarios  Links regex1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Trabajos Diarios": {
+      "main": [
+        [
+          {
+            "node": "Trabajos Diarios  Links regex1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tcjob": {
+      "main": [
+        [
+          {
+            "node": "tcjob  Links regex",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tcjob  Links regex": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Linkedin Lista Parsing HTML1": {
+      "main": [
+        [
+          {
+            "node": "Linkedin Links regex1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Linkedin Links regex1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Get On Board Parsing": {
+      "main": [
+        [
+          {
+            "node": "Gentonboard Link regex",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gentonboard Link regex": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "Bumeran Parsing": {
+      "main": [
+        [
+          {
+            "node": "Gentonboard Link regex1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gentonboard Link regex1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 6
+          }
+        ]
+      ]
+    },
+    "DICCIONARIO1": {
+      "main": [
+        [
+          {
+            "node": "Deduplicate DB (Seen URLs index)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No seleccionados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DICCIONARIO": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "2e951c5d-b351-44a6-8124-aba59b5e44b2",
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-04-07T17:30:58.185Z",
+      "createdAt": "2026-04-07T17:30:58.185Z",
+      "role": "workflow:owner",
+      "workflowId": "7YGtfXS1hpErZhKn",
+      "projectId": "h1BZQDCni1dEZyvw"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}
