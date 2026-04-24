@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-16T22:16:17.765Z",
+  "updatedAt": "2026-04-23T12:38:33.620Z",
   "createdAt": "2026-04-07T17:30:58.179Z",
   "id": "7YGtfXS1hpErZhKn",
   "name": "n8n-orqestation-email",
@@ -338,13 +338,14 @@
     },
     {
       "parameters": {
-        "operation": "delete"
+        "operation": "delete",
+        "messageId": "={{ $json.id_email }}"
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        3024,
-        432
+        3232,
+        624
       ],
       "id": "f9ec95d1-8712-4fe6-82cc-2d686e531130",
       "name": "Delete a message",
@@ -680,8 +681,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        3232,
-        624
+        2848,
+        400
       ],
       "id": "7f54e35e-4b12-4a47-be90-1e000ef9d2a8",
       "name": "DELETE MESSAGES",
@@ -1248,7 +1249,7 @@
       "main": [
         [
           {
-            "node": "DELETE MESSAGES",
+            "node": "Delete a message",
             "type": "main",
             "index": 0
           }
@@ -1398,7 +1399,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "2e951c5d-b351-44a6-8124-aba59b5e44b2",
+  "versionId": "5f6f90a8-d873-4808-a293-f567dd6a1be1",
   "activeVersionId": null,
   "triggerCount": 0,
   "shared": [
