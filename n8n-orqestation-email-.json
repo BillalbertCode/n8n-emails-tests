@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-23T12:38:33.620Z",
+  "updatedAt": "2026-05-03T03:04:31.768Z",
   "createdAt": "2026-04-07T17:30:58.179Z",
   "id": "7YGtfXS1hpErZhKn",
   "name": "n8n-orqestation-email",
@@ -20,7 +20,7 @@
     {
       "parameters": {
         "operation": "getAll",
-        "returnAll": true,
+        "limit": 2,
         "simple": false,
         "filters": {
           "labelIds": [
@@ -32,7 +32,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        320,
+        144,
         720
       ],
       "id": "c219edc6-6d11-43c8-8070-549fa508811c",
@@ -260,7 +260,7 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        544,
+        448,
         608
       ],
       "id": "34008553-53df-4d42-9065-675d59ba2494",
@@ -344,7 +344,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        3232,
+        3248,
         624
       ],
       "id": "f9ec95d1-8712-4fe6-82cc-2d686e531130",
@@ -355,7 +355,8 @@
           "id": "pVTSZP5SJJKcWgaf",
           "name": "Gmail account"
         }
-      }
+      },
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -681,8 +682,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        2848,
-        400
+        3024,
+        480
       ],
       "id": "7f54e35e-4b12-4a47-be90-1e000ef9d2a8",
       "name": "DELETE MESSAGES",
@@ -692,7 +693,8 @@
           "id": "pVTSZP5SJJKcWgaf",
           "name": "Gmail account"
         }
-      }
+      },
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -716,16 +718,17 @@
           "id": "pVTSZP5SJJKcWgaf",
           "name": "Gmail account"
         }
-      }
+      },
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
-        "content": "## Lista negra [ADD\n- BairesDev\n- INDI Staffing Services\n- Sezzle\n"
+        "content": "## Lista negra [ADD\n- BairesDev\n- INDI Staffing Services\n- Sezzle\n- Quick Hire"
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2048,
-        -480
+        1200,
+        -16
       ],
       "typeVersion": 1,
       "id": "17a6d73c-4970-486d-8a31-0df4711558a0",
@@ -770,7 +773,7 @@
       "typeVersion": 1.2,
       "position": [
         768,
-        336
+        368
       ],
       "id": "abbc231a-8ef3-4af6-bc42-96d83294c27e",
       "name": "Trabajos Diarios",
@@ -972,7 +975,7 @@
             {
               "id": "6d2d0f82-6ed0-4890-82f3-e7fba4013c42",
               "leftValue": "={{ $json.title }}",
-              "rightValue": "=Developer|Desarrollador|Programador|Engineer|Software|Frontend|Backend|Web|Full|Full-Stack|Junnior|Stack",
+              "rightValue": "=Developer|Desarrollador|Programador|Engineer|Software|Frontend|Backend|Web|Full|Full-Stack|Junnior|Stack|Ingeniero|programador",
               "operator": {
                 "type": "string",
                 "operation": "regex"
@@ -1031,6 +1034,32 @@
       "notesInFlow": true,
       "onError": "continueRegularOutput",
       "notes": "Palabras clave (white-list)"
+    },
+    {
+      "parameters": {
+        "content": "## Refactorizar que use AI \nPara optimizar el proceso de extraccion de html\n"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1216,
+        208
+      ],
+      "typeVersion": 1,
+      "id": "bea1bee6-bce7-4ae7-8964-ae9cbb9a46c5",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nfor (const item of items) {\n  const email = item.json;\n  \n  let domain = \"desconocido\";\n  const fromAddress = email.from?.value?.[0]?.address || \n                      email.from?.address || \n                      email.from || \n                      \"desconocido\";\n  const atIndex = String(fromAddress).indexOf(\"@\");\n  \n  if (atIndex !== -1) {\n    domain = String(fromAddress).substring(atIndex + 1).trim();\n  }\n  \n  // Hash basado en SUBJECT (no en nombre del remitente)\n  const subjectRaw = String(email.from?.text)\n    .replace(/\\d+/g, \"\")      // quitar números (IDs, fechas, conteos)\n    .replace(/\\s+/g, \"\")      // quitar espacios\n    .substring(0, 40)         // primeros 40 chars ya bastan para identificar\n    .toLowerCase();\n  $input.first().json.from.text\n  const hashInput = domain + \"|\" + subjectRaw;\n  let hash = \"\";\n  for (let i = 0; i < hashInput.length; i++) {\n    const charCode = hashInput.charCodeAt(i);\n    hash += (charCode % 16).toString(16);\n  }\n  \n  email.hash = hash.substring(0, 16);\n  email.fromDomain = domain;\n}\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        288,
+        960
+      ],
+      "id": "14dccf23-42c2-431c-ba53-d81cd9563a0a",
+      "name": "Code in JavaScript"
     }
   ],
   "connections": {
@@ -1050,6 +1079,11 @@
         [
           {
             "node": "Switch",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code in JavaScript",
             "type": "main",
             "index": 0
           }
@@ -1399,7 +1433,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "5f6f90a8-d873-4808-a293-f567dd6a1be1",
+  "versionId": "b6e337f1-6731-47a1-9d6c-19a92ca3e5df",
   "activeVersionId": null,
   "triggerCount": 0,
   "shared": [
