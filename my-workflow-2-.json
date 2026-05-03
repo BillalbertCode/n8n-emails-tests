@@ -1,0 +1,559 @@
+{
+  "updatedAt": "2026-05-03T03:08:58.098Z",
+  "createdAt": "2026-05-02T22:39:51.567Z",
+  "id": "LduGnSSQtUsWNnRA",
+  "name": "My workflow 2",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        336
+      ],
+      "id": "6a833c77-7bb4-4754-b553-80bdbd95fee1",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 2,
+        "simple": false,
+        "filters": {
+          "labelIds": [
+            "Label_660351348862593503"
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        336
+      ],
+      "id": "71b26ccd-e1c0-4780-b545-4a7ad6a27d77",
+      "name": "Get many messages",
+      "webhookId": "87009c4b-c937-40a7-a505-aca9328295a5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "pVTSZP5SJJKcWgaf",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nfor (const item of items) {\n  const email = item.json;\n  \n  let domain = \"desconocido\";\n  const fromAddress = email.from?.value?.[0]?.address || \n                      email.from?.address || \n                      email.from || \n                      \"desconocido\";\n  const atIndex = String(fromAddress).indexOf(\"@\");\n  \n  if (atIndex !== -1) {\n    domain = String(fromAddress).substring(atIndex + 1).trim();\n  }\n  \n  // Hash basado en SUBJECT (no en nombre del remitente)\n  const subjectRaw = String(email.from?.text)\n    .replace(/\\d+/g, \"\")      // quitar números (IDs, fechas, conteos)\n    .replace(/\\s+/g, \"\")      // quitar espacios\n    .substring(0, 40)         // primeros 40 chars ya bastan para identificar\n    .toLowerCase();\n  $input.first().json.from.text\n  const hashInput = domain + \"|\" + subjectRaw;\n  let hash = \"\";\n  for (let i = 0; i < hashInput.length; i++) {\n    const charCode = hashInput.charCodeAt(i);\n    hash += (charCode % 16).toString(16);\n  }\n  \n  email.hash = hash.substring(0, 16);\n  email.fromDomain = domain;\n}\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        336
+      ],
+      "id": "a3012cba-1f86-4188-bb55-61b8dcb56844",
+      "name": "smart classifier"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "AsaI8eKFVQEzzUJK",
+          "mode": "list",
+          "cachedResultName": "pattern_jobs",
+          "cachedResultUrl": "/projects/h1BZQDCni1dEZyvw/datatables/AsaI8eKFVQEzzUJK"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "pattern_hash",
+              "keyValue": "={{ $json.hash }}"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        336
+      ],
+      "id": "706062d0-779c-487a-9ff2-61c352c41446",
+      "name": "Get row(s)",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "operation": "rowNotExists",
+        "dataTableId": {
+          "__rl": true,
+          "value": "AsaI8eKFVQEzzUJK",
+          "mode": "list",
+          "cachedResultName": "pattern_jobs",
+          "cachedResultUrl": "/projects/h1BZQDCni1dEZyvw/datatables/AsaI8eKFVQEzzUJK"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "pattern_hash",
+              "keyValue": "={{ $json.hash }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        528
+      ],
+      "id": "7e197bb7-cd7e-49e2-aa77-8c6b415bd80b",
+      "name": "If row does not exist"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        752
+      ],
+      "id": "e544a613-202e-4f21-bf36-aeae5e65b4b0",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "NLXIYGbrxhjY9vCI",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Extrae del siguiente email: título del puesto, nombre de la empresa, link de la oferta, y sugiere 3 selectores css para N8N el nodo extrat html para extraer esto mismo en futuros emails similares.\n\nMUY IMPORTANTE!!! Cada email puede tener varias vacantes, tienes que crear los selectores apuntando a esto, y el link tendra un atributo href por defecto en el nodo\n\nSubject: {{ $json.subject }}\nHTML: {{ $json.html }}\n\nalgo similar a div.card div a\nResponde SOLO JSON:\n{\n  \"title\": \"...\",\n  \"company\":\"...\",\n  \"link\": \"...\",\n\"hash\":\"{{ $json.hash }}\"\n  \"selectors\": {\n    \"title\": \"selector here\",\n    \"company\": \"selector here\",\n    \"link\": \"selector here\"\n    \"type_selector\": \"selector type (css or regex)\"\n  }\n\n}",
+        "hasOutputParser": true,
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        1120,
+        528
+      ],
+      "id": "2094263f-6841-4a95-adac-739cebb5ac8b",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"title\": \"...\",\n  \"company\": \"...\",\n  \"link\": \"...\",\n  \"hash\": \"hash\",\n  \"selectors\": {\n    \"title\": \"selector\",\n    \"company\": \"selector\",\n    \"link\": \"selector\",\n    \"type_selector\": \"selector type (css or regex)\"\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1264,
+        752
+      ],
+      "id": "55b832a5-8688-4231-9423-5e0e0756b4f7",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "AsaI8eKFVQEzzUJK",
+          "mode": "list",
+          "cachedResultName": "pattern_jobs",
+          "cachedResultUrl": "/projects/h1BZQDCni1dEZyvw/datatables/AsaI8eKFVQEzzUJK"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "pattern_hash",
+              "keyValue": "={{ $json.output.hash }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "extraction_type": "css",
+            "title_selector": "={{ $json.output.selectors.title }}",
+            "link_selector": "={{ $json.output.selectors.company }}",
+            "company_selector": "={{ $json.output.selectors.link }}",
+            "pattern_hash": "={{ $json.output.hash }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "pattern_hash",
+              "displayName": "pattern_hash",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "extraction_type",
+              "displayName": "extraction_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "selector",
+              "displayName": "selector",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "title_selector",
+              "displayName": "title_selector",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "link_selector",
+              "displayName": "link_selector",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "company_selector",
+              "displayName": "company_selector",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "dryRun": false
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1472,
+        528
+      ],
+      "id": "d4dd967f-4b4a-485a-9eb9-36eb31791f56",
+      "name": "Upsert row(s)"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "hash",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        896,
+        528
+      ],
+      "id": "a47eea48-d657-4b29-bfcd-df7d67ad44e0",
+      "name": "Remove Duplicates"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "dataPropertyName": "html",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "title",
+              "cssSelector": "={{ $json.title_selector }}",
+              "returnArray": true
+            },
+            {
+              "key": "company",
+              "cssSelector": "={{ $json.company_selector }}",
+              "returnArray": true
+            },
+            {
+              "key": "link",
+              "cssSelector": "={{ $json.link_selector }}",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        1264,
+        240
+      ],
+      "id": "7458b9a7-d048-4b24-8acb-1eb05bafc13f",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "operation": "rowExists",
+        "dataTableId": {
+          "__rl": true,
+          "value": "AsaI8eKFVQEzzUJK",
+          "mode": "list",
+          "cachedResultName": "pattern_jobs",
+          "cachedResultUrl": "/projects/h1BZQDCni1dEZyvw/datatables/AsaI8eKFVQEzzUJK"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "pattern_hash",
+              "keyValue": "={{ $json.hash }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        144
+      ],
+      "id": "4979b236-9304-4337-9bae-57763b88881b",
+      "name": "If row exists"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "advanced": true,
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "hash",
+              "field2": "pattern_hash"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        880,
+        224
+      ],
+      "id": "19fc43fd-26e7-48e2-bdc2-9be03807e983",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        1056,
+        224
+      ],
+      "id": "7a945567-fd24-4542-b6b7-8d8049e20854",
+      "name": "Remove Duplicates1"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get many messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages": {
+      "main": [
+        [
+          {
+            "node": "smart classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "smart classifier": {
+      "main": [
+        [
+          {
+            "node": "If row does not exist",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If row exists",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "If row does not exist": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Upsert row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If row exists": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates1": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "b7b66e4a-4bef-4660-a440-efb99e46ef09",
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-05-02T22:39:51.569Z",
+      "createdAt": "2026-05-02T22:39:51.569Z",
+      "role": "workflow:owner",
+      "workflowId": "LduGnSSQtUsWNnRA",
+      "projectId": "h1BZQDCni1dEZyvw"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}
